@@ -1,0 +1,13 @@
+#### ACF program mapping functions 
+#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-
+
+
+#### rename columns function 
+rename_acf_program_map <- function(input_pm) {
+  
+  acf_new_colnames <- colnames(input_pm) %>% tolower()
+  acf_new_colnames <- gsub(" ", "_", acf_new_colnames)
+  acf_new_colnames
+  colnames(input_pm) <- acf_new_colnames
+  return(input_pm)
+}
