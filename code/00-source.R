@@ -4,7 +4,7 @@ PKGS <- c('tidyverse', 'curl', 'digest',
           'rvest', 'stringr', 'arrow',
            'RecordLinkage', 'stringdist',
           'RSelenium', 'rJava', 'httr',
-          'binman', 'openxlsx')
+          'binman', 'openxlsx', 'naniar')
 lapply(PKGS, library, character.only = TRUE )
 options(scipen = 99999, timeout = 90000)
 

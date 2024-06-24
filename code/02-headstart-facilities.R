@@ -38,19 +38,21 @@ hash_headstart <- create_facility_hash(headstart_df)
 
 # Filter data to only grants whose current performance data is relevant, i.e.
 # remove facilities associated with grants that have expired 
-relevant_FAINs <- full_grants_df %>% 
-  filter(period_of_performance_current_end_date > CURR_DATE) %>% 
-  pull(unique(award_id_fain))
+# relevant_FAINs <- full_grants_df
+# %>% 
+  # This filtering is not necessary for Task 3 but is relevant for Task 2 
+  # filter(period_of_performance_current_end_date > CURR_DATE) %>% 
+  # pull(unique(award_id_fain))
 length(relevant_FAINs)
 
 # Filter to only relevant FAINs
-cleaned_headstart <- hash_headstart %>% 
-  filter(grant_number %in% relevant_FAINs)
-dim(out_head_start_df)
-dim(hash_headstart)
+# cleaned_headstart <- hash_headstart %>% 
+#   filter(grant_number %in% relevant_FAINs)
+# dim(hash_headstart)
 
+cleaned_headstart <- hash_headstart
 # Remove irrelevant dfs
-rm(raw_hs_df, expanded_hs_df, headstart_df, hash_headstart)
+# rm(raw_hs_df, expanded_hs_df, headstart_df, hash_headstart)
 
 # Output cleaned up Head Start facilities
 write_head_start_locations()

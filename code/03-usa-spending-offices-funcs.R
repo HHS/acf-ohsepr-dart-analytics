@@ -17,6 +17,8 @@ get_full_grants_df <- function() {
   df = read_feather(file_name)
   cat('The full_grants_df was successfully pulled.') 
   
+  assign(x = 'full_grants_df', value = df, envir = .GlobalEnv)
+  
   return(df)}
   
   if (exists("full_grants_df") == TRUE) {
@@ -25,6 +27,37 @@ get_full_grants_df <- function() {
   }
 }
 
+#### summarize_office_methods(): function to summarize the dist values per method
+# used to identify each Office
+summarize_office_methods <- function(df) {
+
+  # tbl: method; count; cfda coverage; funding office coverage; office coverage
+  # browser()
+  df_name <- deparse(substitute(df))
+  print(df_name)
+  office <- str_split_fixed(df_name, "_", 2)[, 1]
+  n_unique_grants <- length(unique(df$award_id_fain))
+  n_unique_recipients <- length(unique(df$recipient_uei))
+  n_observations <- nrow(df)
+  summ_df <- df %>% 
+    group_by(award_id_fain) %>% 
+    arrange(assistance_transaction_unique_key) %>% 
+    slice(1) %>% 
+    ungroup() %>% 
+    summarize(cfda_coverage = mean(cfda_flag)*100,
+              funding_office_coverage = mean(funding_office_flag)*100,
+              prog_activities_coverage = mean(prog_activities_flag)*100
+    )
+  
+  out_df <- data.frame(office = office,
+                       meth = df_name, 
+                       cbind(n_unique_recipients, n_unique_grants, n_observations, summ_df))
+  
+  return(out_df)
+  
+}
+
+# get_full_grants_df()
 ###############################################################################
 # Office of Head Start
 ###############################################################################
@@ -154,9 +187,9 @@ prime_get_OFVPS <- function(grantee_df) {
   
 }
 
-prime_OFVPS_df <- prime_get_OFVPS(usa_spending_df)
+prime_OFVPS_df <- prime_get_OFVPS(full_grants_df)
 
-
+table(prime_OFVPS_df$program_activities_funding_this_award)
 
 ###############################################################################
 # ANA 

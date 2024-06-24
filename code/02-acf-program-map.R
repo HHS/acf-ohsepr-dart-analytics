@@ -13,12 +13,12 @@ source(ACF_funcs, echo = TRUE, verbose = TRUE)
 
 # Specify output file name and out directory 
 ACT_OUT_NAME <- 'acf_program_mapping.feather'
-ACF_OUT_FILE <- paste0(ACF_dir, ACT_OUT_NAME)
 ACF_dir <- paste0(INPUT_DIR, '/acf-program-mapping/')
 ACF_dir
 if (dir.exists(ACF_dir) == FALSE) {
   dir.create(ACF_dir)
 }
+ACF_OUT_FILE <- paste0(ACF_dir, ACT_OUT_NAME)
 
 # Read in ACF program mapping data source(s)
 acf_raw <- readxl::read_xlsx(paste0(ACF_dir, 'ACF Program List Export - OFVPS - 2024-04.xlsx'))
